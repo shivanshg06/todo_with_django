@@ -49,10 +49,11 @@ class GetNotesClass {
     try {
       await http.put(
         Uri.parse('${baseUrl}create/'),
-        body: [
-          {"data": note}
-        ],
+        body: {
+          'body': note,
+        },
       );
+      log(note);
     } catch (e) {
       log('$e');
       // return Future.error(e);

@@ -101,6 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     notesService.addNote(noteConroller.text);
                   } catch (e) {
                     log('$e');
+                  } finally {
+                    Navigator.pop(context);
+                    log('popped');
                   }
                 },
                 1,
