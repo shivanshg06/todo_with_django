@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:todo_with_django/screen/home.dart';
 
 import '../urls.dart';
 
@@ -26,12 +27,12 @@ class _UpdateNotesState extends State<UpdateNotes> {
         builder: (context, snapshot) {
           log('$snapshot ++++');
           if (snapshot.hasData) {
-            var _myNote = snapshot.data;
-            log('$_myNote');
+            var myNote = snapshot.data;
+            log('$myNote');
             return Column(
               children: [
                 Text(
-                  _myNote['body'],
+                  myNote['body'],
                 ),
               ],
             );
@@ -40,13 +41,22 @@ class _UpdateNotesState extends State<UpdateNotes> {
           return Center(child: CircularProgressIndicator());
         },
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _delete),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _delete,
+        child: const Icon(Icons.delete),
+      ),
     );
   }
 
   void _delete() {
     notesService.deleteById(widget.id);
-    log('Note deleted');
-    
+    log('${widget.id} Note deleted');
+    Navigator.popUntil(context, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: ((context) => MyHomePage()),
+      ),
+    );
   }
 }

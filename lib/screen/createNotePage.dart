@@ -1,0 +1,23 @@
+// ignore_for_file: prefer_const_constructors, file_names
+
+import 'package:flutter/material.dart';
+
+class AddNote extends StatefulWidget {
+  const AddNote({super.key});
+
+  @override
+  State<AddNote> createState() => _AddNoteState();
+}
+
+class _AddNoteState extends State<AddNote> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'CRUD practice',
+        ),
+      ),
+    );
+  }
+}
