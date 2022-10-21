@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:alert_dialog/alert_dialog.dart';
 import '../urls.dart';
 import 'update.dart';
 
@@ -103,7 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     log('$e');
                   } finally {
                     Navigator.pop(context);
-                    log('popped');
+                    noteConroller.text = '';
+                    setState(() {});
                   }
                 },
                 1,
