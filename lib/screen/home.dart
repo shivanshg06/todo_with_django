@@ -16,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   GetNotesClass notesService = GetNotesClass();
-
+  TextEditingController noteConroller = TextEditingController();
   @override
   void initState() {
     setState(() {});
@@ -87,18 +87,33 @@ class _MyHomePageState extends State<MyHomePage> {
   addNoteDialog() {
     return AlertDialog(
       title: Text('Add New Note:'),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          buttons(
-            'add',
-            () {},
-            1,
-          ),
-          buttons(
-            'cancel',
-            () {},
-            0,
+          textfield1(noteConroller),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buttons(
+                'Add',
+                () {
+                  try {
+                    notesService.addNote(noteConroller.text);
+                  } catch (e) {
+                    log('$e');
+                  }
+                },
+                1,
+              ),
+              buttons(
+                'Cancel',
+                () {
+                  Navigator.pop(context);
+                  log('popped');
+                },
+                0,
+              ),
+            ],
           ),
         ],
       ),
@@ -106,18 +121,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   buttons(String title, Function func, int good) {
-    return GestureDetector(
-      onTap: func(),
-      child: Container(
-        decoration: BoxDecoration(
-          color: good == 1 ? Colors.blue : Colors.red,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () => func(),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
           ),
+          height: 20,
+          child: Text(title),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        height: 20,
-        child: Text(title),
+      ),
+    );
+  }
+
+  textfield1(TextEditingController myController) {
+    return TextField(
+      controller: myController,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        hintText: 'Add your note here',
       ),
     );
   }

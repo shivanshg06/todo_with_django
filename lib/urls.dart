@@ -44,4 +44,18 @@ class GetNotesClass {
       log('$e');
     }
   }
+
+  Future addNote(String note) async {
+    try {
+      await http.put(
+        Uri.parse('${baseUrl}create/'),
+        body: [
+          {"data": note}
+        ],
+      );
+    } catch (e) {
+      log('$e');
+      // return Future.error(e);
+    }
+  }
 }
